@@ -1,0 +1,122 @@
+\section{Быстрый старт}
+\sectionmark{Быстрый старт}
+
+
+\subsection{Установка Scratch 2 Offline Editor}
+Зайдите на сайт \verb|"https://scratch.mit.edu/scratch2download/"| и следуйте инструкциям инсталлятора.
+
+
+\subsection{Установка Arduino IDE}
+Зайдите на сайт \verb|"https://www.arduino.cc/en/Main/Software"| и следуйте инструкциям инсталлятора.
+
+
+\subsection{Установка драйверов платы Arduino}
+На платах Arduino стоит преобразователь USB -> RS232 четез который осуществляется перепрограммирование и далее, либо связь с персональным компьютером, либо вывод отладочной информации.
+
+Для установки драйверов для оригинальных Arduino, воспользуйтесь
+информацией \verb|"http://arduino.ru/Guide/Windows#4"|.
+
+Для китайского варианта Arduino с микросхемой CH340G, воспользуйтесь информацией \verb|"http://arduino-project.net/driver-ch340g"|.
+
+
+
+\subsection{Установка ''Scratch2 to ROBO translator''}
+
+Скачайте архив с проектом с адреса \verb|"https://github.com/yrasik/Scratch2_and_ROBO"| согласно рисунку~\ref{p:guthub_download}.
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/guthub_download}
+  \caption{Скачивание архива с GitHub} \label{p:guthub_download}
+\end{figure}
+
+Скачанный архив называется \verb|"Scratch2_and_ROBO-master.zip"|. Распакуйте архив в папку.
+
+ВНИМАНИЕ : в путях к папке не должно быть пробелов и русских букв.
+
+Программа ''Scratch2 to ROBO translator'' не требует установки. Исполняемый файл находится по адресу \verb|"\Scratch2_and_ROBO-master\for_win\Scratch2_to_ROBO_translator\bin\serv.exe"|. 
+
+
+\subsection{Загрузка  программы в Arduino}
+
+Программа для робота (в терминологии Arduino - скетч) лежит в папке \\ \verb|"\Scratch2_and_ROBO-master\for_arduino\ROBO_program\"|.
+
+Откройте этот проект средой Arduino IDE. Убедитесь, что настройки проекта соответствуют рисунку~\ref{p:arduino_programming}.
+
+Убедитесь, что активные пины платы соответствуют схеме.
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/arduino_programming}
+  \caption{Загрузка проекта в Arduino} \label{p:arduino_programming}
+\end{figure}
+
+Убедитесь, что плата Arduino подключена к компьютеру. Выберите в меню ''Инструменты'' соответствующий тип платы, и нужный порт COM.
+
+Нажмите кнопку ''Загрузка'', ждите сообщения об успешной загрузке платы.
+
+Плата Arduino готова к использованию.
+
+
+\subsection{Установка дополнения в Scratch 2}
+
+Запустите Scratch 2. Нажмите и удерживайте клавишу ''Shift'', мышкой кликните по меню ''Файл''. В открывшемся списке мышкой выберите ''Импортировать экспериментальное расширение HTTP'' (рисунок~\ref{p:scratch2_addon_setup_1}).
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/scratch2_addon_setup_1}
+  \caption{Установка дополнения в Scratch 2} \label{p:scratch2_addon_setup_1}
+\end{figure}
+
+Расширение лежит по адресу \\ \verb|"\Scratch2_and_ROBO-master\for_scratch2\Scratch2_extension_ROBO\ROBO.s2e"|.
+
+В результате, во вкладке ''Другие блоки'' появятся новые блоки (рисунок~\ref{p:scratch2_addon_setup_2}).
+
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/scratch2_addon_setup_2}
+  \caption{Scratch 2 с установленным дополнением ROBO} \label{p:scratch2_addon_setup_2}
+\end{figure}
+
+
+
+\subsection{Запуск проекта на выполнение}
+
+В меню  ''Файл->Открыть'' откройте тестовый проект, лежащий по адресу \\  \verb|"\Scratch2_and_ROBO-master\for_scratch2\project_ROBO_1.sb2"|.
+
+Запустите программу \\ \verb|"\Scratch2_and_ROBO-master\for_win\Scratch2_to_ROBO_translator\bin\serv.exe"|. Рабочий стол должен выглядеть как показано на рисунке~\ref{p:scratch2_addon_setup_3}.
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/scratch2_addon_setup_3}
+  \caption{Подготовка к запуску робота} \label{p:scratch2_addon_setup_3}
+\end{figure}
+
+В программе ''Scratch2 to ROBO translator'' выберите порт Arduino и нажмите кнопку ''Запуск''. Связь с роботом должна установиться (рисунок~\ref{p:scratch2_addon_setup_4}): в Scratch 2 индикатор связи должен позеленеть, программа ''Scratch2 to ROBO translator'' должна написать соответствующее сообщение.
+
+
+\begin{figure}[H]\center
+  \captionsetup{singlelinecheck=true} %центрируем подрисуночную подпись
+  \includegraphics*[scale=0.7]{about/images/scratch2_addon_setup_4}
+  \caption{Загрузка проекта в Arduino} \label{p:scratch2_addon_setup_4}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
