@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <QObject>
 #include <QByteArray>
 #include <QDebug>
+#include <QLineEdit>
 
 
 #include "parser.h"
@@ -63,6 +64,8 @@ private:
     QTextBrowser *textinfo;
     QPushButton *stoping;
     QPushButton *starting;
+    QLabel *Label_serial_timeout;
+    QLineEdit *LineEdit_serial_timeout;
 
     bool server_status;
 

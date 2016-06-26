@@ -41,7 +41,7 @@ class RoboTcpServer : public QTcpServer
 public:
     explicit RoboTcpServer(QObject *parent = 0);
     ~RoboTcpServer();
-    signed char startServer(const QString &name_serial_port);
+    signed char startServer(const QString &name_serial_port, int serial_timeout);
     void stopServer(void);
 signals:
     void slot_showResponse(const QByteArray &s);
@@ -66,6 +66,7 @@ private:
     parser pars;
     SerialThread serial;
     QString name_serial_port;
+    int serial_timeout;
 };
 
 #endif // MYSERVER_H

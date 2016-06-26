@@ -83,7 +83,7 @@ void SerialThread::transaction(const QString &portName, int waitTimeout, const Q
     if (serial.waitForReadyRead(this->waitTimeout))
     {
       QByteArray responseData = serial.readAll();
-      while (serial.waitForReadyRead(10)) //Без этого с Arduino UNO связи нет
+      while (serial.waitForReadyRead( (this->waitTimeout/10) )) //Без этого с Arduino UNO связи нет
                 responseData += serial.readAll();
 //                qDebug() << "<--" << responseData.toHex();
       emit this->response(responseData);

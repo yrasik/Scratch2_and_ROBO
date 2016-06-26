@@ -36,20 +36,37 @@ Dialog::Dialog(QWidget *parent)
     , textinfo(new QTextBrowser(this))
     , stoping(new QPushButton(tr("Остановка")))
     , starting(new QPushButton(tr("Запуск")))
+    , Label_serial_timeout(new QLabel(tr("Ожидание, мС:")))
+    , LineEdit_serial_timeout(new QLineEdit(tr("300")))
 
 {
 
     foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts())
         serialPortComboBox->addItem(info.portName());
 
-    QGridLayout *mainLayout = new QGridLayout;
-    mainLayout->addWidget(serialPortLabel, 0, 0);
-    mainLayout->addWidget(serialPortComboBox, 0, 1);
-    mainLayout->addWidget(textinfo, 1, 0, 1, 0);
-    mainLayout->addWidget(stoping, 2, 0);
-    mainLayout->addWidget(starting,2, 1);
 
-    setLayout(mainLayout);
+
+    QHBoxLayout *HBoxLayout_serial = new QHBoxLayout;
+    HBoxLayout_serial->addWidget(serialPortLabel);
+    HBoxLayout_serial->addWidget(serialPortComboBox);
+    QSpacerItem *horizontalSpacer_serial = new QSpacerItem(40, 18, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    HBoxLayout_serial->addItem(horizontalSpacer_serial);
+    HBoxLayout_serial->addWidget(Label_serial_timeout);
+    LineEdit_serial_timeout->setMaximumWidth(40);
+    HBoxLayout_serial->addWidget(LineEdit_serial_timeout);
+
+    QHBoxLayout *HBoxLayout_keys = new QHBoxLayout;
+    HBoxLayout_keys->addWidget(stoping);
+    QSpacerItem *horizontalSpacer_keys = new QSpacerItem(40, 18, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    HBoxLayout_keys->addItem(horizontalSpacer_keys);
+    HBoxLayout_keys->addWidget(starting);
+
+    QVBoxLayout *VBoxLayout_main = new QVBoxLayout;
+    VBoxLayout_main->addLayout(HBoxLayout_serial);
+    VBoxLayout_main->addWidget(textinfo);
+    VBoxLayout_main->addLayout(HBoxLayout_keys);
+
+    setLayout(VBoxLayout_main);
 
 
 
@@ -125,13 +142,24 @@ void Dialog::processTimeout(void)
 
 void Dialog::on_starting_clicked()
 {
-  if( server.startServer( serialPortComboBox->currentText() ) == 0 );
+  QString str_timeout = LineEdit_serial_timeout->text();
+  int timeout = str_timeout.toInt();
+
+  if( (timeout <= 0) || (timeout > 10000) )
+  {
+    timeout = 300;
+  }
+
+  LineEdit_serial_timeout->setText( QString::number(timeout) );
+
+  if( server.startServer( serialPortComboBox->currentText(), timeout ) == 0 );
   {
     server_status = true;
     starting->setEnabled(false);
     stoping->setEnabled(true);
     serialPortComboBox->setEnabled(false);
     transaction_to_serial = false;
+    LineEdit_serial_timeout->setEnabled(false);
   }
 }
 
@@ -146,6 +174,7 @@ void Dialog::on_stoping_clicked()
       stoping->setEnabled(false);
       serialPortComboBox->setEnabled(true);
       transaction_to_serial = false;
+      LineEdit_serial_timeout->setEnabled(true);
     }
 }
 

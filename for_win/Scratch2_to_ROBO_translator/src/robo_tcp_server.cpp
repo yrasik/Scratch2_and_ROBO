@@ -82,9 +82,11 @@ void RoboTcpServer::processTimeout(const QString &s)
 }
 
 
-signed char RoboTcpServer::startServer(const QString &name_serial_port)
+signed char RoboTcpServer::startServer(const QString &name_serial_port, int serial_timeout)
 {
     this->name_serial_port = name_serial_port;
+    this->serial_timeout = serial_timeout;
+
 
     int port = 50208;
 
@@ -125,7 +127,7 @@ void RoboTcpServer::stopServer(void)
 
 void RoboTcpServer::data_from_http(const Message &mes)
 {
-  serial.transaction( name_serial_port, 300/*2000*//*300*/, pars.tx_to_serial(mes) );
+  serial.transaction( name_serial_port, serial_timeout, pars.tx_to_serial(mes) );
 }
 
 
