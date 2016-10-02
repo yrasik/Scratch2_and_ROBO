@@ -481,21 +481,21 @@ void loop()
         wait_command = 1;
         order_spi_write = 1;
         wait_id = ((unsigned int)(command_rx[1]) << 8) | (unsigned int)(command_rx[2]);
-        SPI_out[1] = command_rx[3];
+        SPI_out[2] = command_rx[3];
         time_interval_finish = millis() + SERVO_DELAY_MS;
         break;
       case SCRATCH_TAG__servo_2_degrees :
         wait_command = 1;
         order_spi_write = 1;
         wait_id = ((unsigned int)(command_rx[1]) << 8) | (unsigned int)(command_rx[2]);
-        SPI_out[2] = command_rx[3];
+        SPI_out[3] = command_rx[3];
         time_interval_finish = millis() + SERVO_DELAY_MS;
         break;
       case SCRATCH_TAG__servo_3_degrees :
         wait_command = 1;
         order_spi_write = 1;
         wait_id = ((unsigned int)(command_rx[1]) << 8) | (unsigned int)(command_rx[2]);
-        SPI_out[3] = command_rx[3];
+        SPI_out[4] = command_rx[3];
         time_interval_finish = millis() + SERVO_DELAY_MS;
         break;
       case SCRATCH_TAG__led_0 :

@@ -93,7 +93,8 @@ enum SCRATCH_TAG
   SCRATCH_TAG__gyro_Z,
   SCRATCH_TAG__photo,
   SCRATCH_TAG__thermo,
-  SCRATCH_TAG__move_speed
+  SCRATCH_TAG__move_speed,
+  SCRATCH_TAG__stepper_0_steps
 };
 
 

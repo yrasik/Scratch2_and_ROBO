@@ -54,6 +54,7 @@ QObject(parent)
   scratch_tags.push_back( scratch_tag::init(SCRATCH_TAG__photo, SCRATCH_BLOCK_TYPE__R, "/photo") );
   scratch_tags.push_back( scratch_tag::init(SCRATCH_TAG__thermo, SCRATCH_BLOCK_TYPE__R, "/thermo") );
   scratch_tags.push_back( scratch_tag::init(SCRATCH_TAG__move_speed, SCRATCH_BLOCK_TYPE__EMPTY, "/move_speed", 1) );
+  scratch_tags.push_back( scratch_tag::init(SCRATCH_TAG__stepper_0_steps, SCRATCH_BLOCK_TYPE__W, "/stepper_0_steps", 1) );
 
 
   Robo_ID = "ROBO:";
@@ -105,10 +106,6 @@ signed char parser::read_from_http(const QString &str)
         case SCRATCH_TAG__move_left :
         case SCRATCH_TAG__move_right :
         case SCRATCH_TAG__move_back :
-        case SCRATCH_TAG__servo_0_degrees : //В случае сервомотора - вторым аргументом является угол поворота, а не задержка. Как микроконтроллер отработает, так уберёт _busy из ответа
-        case SCRATCH_TAG__servo_1_degrees :
-        case SCRATCH_TAG__servo_2_degrees :
-        case SCRATCH_TAG__servo_3_degrees :
 //{
 //QString  err = "-->" + str + "\n";
 //emit this->message_to_gui(TEXT_MESSAGE_TYPE__WARNING, err);
@@ -170,6 +167,64 @@ signed char parser::read_from_http(const QString &str)
             emit this->message_to_gui(TEXT_MESSAGE_TYPE__ERROR, err);
             qDebug() << err;
             return -33;
+          }
+          break;       
+        case SCRATCH_TAG__servo_0_degrees : //В случае сервомотора - вторым аргументом является угол поворота, а не задержка. Как микроконтроллер отработает, так уберёт _busy из ответа
+        case SCRATCH_TAG__servo_1_degrees :
+        case SCRATCH_TAG__servo_2_degrees :
+        case SCRATCH_TAG__servo_3_degrees :
+        case SCRATCH_TAG__stepper_0_steps :
+          start += (*iter).str.size() + 1;
+          if( (end = str.indexOf("/", start)) != -1 )
+          {
+            bool ok;
+            QString str_arg = str.mid( start, (end - start) );
+            int arg_0_wait_id = str_arg.toInt(&ok); //Идентификатор номера задержки
+            if( ok == true )
+            {
+              start = end + 1;
+              if( (end = str.indexOf(" HTTP")) != -1 )
+              {
+                str_arg.clear();
+                str_arg = str.mid( start, (end - start) );
+                uint8_t arg_1_wait_value_degres = (uint8_t)(str_arg.toInt(&ok));
+                if( ok == true )
+                {
+                  to_serial += (char)((*iter).tag);
+                  to_serial += (char)((arg_0_wait_id >> 8) & 0xFF); //HI
+                  to_serial += (char)( arg_0_wait_id       & 0xFF); //LO
+                  to_serial += (char)(arg_1_wait_value_degres);
+                }
+                else
+                {
+                  QString  err = "ERROR 40: Не смог прочитать аргумент №2:" + str + "\n";
+                  emit this->message_to_gui(TEXT_MESSAGE_TYPE__ERROR, err);
+                  qDebug() << err;
+                  return -40;
+                }
+              }
+              else
+              {
+                QString  err = "ERROR 41: Странный пакет от Scratch (не хватает тега 'HTTP') :" + str + "\n";
+                emit this->message_to_gui(TEXT_MESSAGE_TYPE__ERROR, err);
+                qDebug() << err;
+                return -41;
+              }
+            }
+            else
+            {
+              QString  err = "ERROR 42: Не смог прочитать аргумент №1: " + str + "\n";
+              emit this->message_to_gui(TEXT_MESSAGE_TYPE__ERROR, err);
+              qDebug() << err;
+              return -42;
+            }
+          }
+          else
+          {
+            QString  err = "ERROR 43: Странный пакет от Scratch :" + str + "\n";
+            emit this->message_to_gui(TEXT_MESSAGE_TYPE__ERROR, err);
+            qDebug() << err;
+            return -43;
           }
           break;
         case SCRATCH_TAG__led_0 : //52 4F 42 4F 3A 00 03 0A 00 01 - как должно быть в итоге
