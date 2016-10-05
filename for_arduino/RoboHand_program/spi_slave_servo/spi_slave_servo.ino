@@ -94,11 +94,11 @@ enum SYS_statuses
 #define SERVO_0_MIN   0
 #define SERVO_0_MAX   140
 
-#define SERVO_1_MIN   70
+#define SERVO_1_MIN   0
 #define SERVO_1_MAX   180
 
-#define SERVO_2_MIN   10
-#define SERVO_2_MAX   120
+#define SERVO_2_MIN   0
+#define SERVO_2_MAX   150
 
 #define SERVO_3_MIN   10
 #define SERVO_3_MAX   120

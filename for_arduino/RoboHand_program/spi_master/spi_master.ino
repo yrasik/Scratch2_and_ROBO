@@ -287,6 +287,13 @@ void setup()
   RX_state = RX_STATE__wait_R;
   wait_id = 0;
   order_spi_write = 0;
+
+
+  SPI_out[0] = 0;
+  SPI_out[1] = 90;
+  SPI_out[2] = 90;
+  SPI_out[3] = 90;
+  SPI_out[4] = 90;
 }
 
 
